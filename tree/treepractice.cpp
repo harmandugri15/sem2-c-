@@ -69,84 +69,294 @@
 //     return 0;
 // }
 
-//----------------------------------------------------------------------
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
-#include <climits>
+//-----------------------------------------------------------tree prac in chirag sir class on 4/11/2025------------------------------
+// #include <iostream>
+// #include <vector>
+// #include <queue>
+// #include <algorithm>
+// #include <climits>
+// using namespace std;
 
-class TreeNode
+// class TreeNode
+// {
+// public:
+//     int val;
+//     TreeNode *left;
+//     TreeNode *right;
+//     TreeNode(int x)
+//     {
+//         this->val = x;
+//         left = nullptr;
+//         right = nullptr;
+//     }
+// };
+// int getHeight(TreeNode *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return 0;
+//     }
+//     else
+//     {
+//         int leftHeight = getHeight(root->left);
+//         int rightHeight = getHeight(root->right);
+//         return 1 + max(leftHeight, rightHeight);
+//     }
+// }
+// //-----------------------------------------------------------------------------preorder
+// void preOrder(TreeNode *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return;
+//     }
+//     cout << root->val << " ";
+//     preOrder(root->left);
+//     preOrder(root->right);
+// }
+// //-------------------------------------------------------------------------------inorder
+// void inOrder(TreeNode *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return;
+//     }
+//     inOrder(root->left);
+//     cout << root->val << " ";
+//     inOrder(root->right);
+// }
+// //----------------------------------------------------------------------------------postorder
+// void postOrder(TreeNode *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return;
+//     }
+//     postOrder(root->left);
+//     postOrder(root->right);
+//     cout << root->val << " ";
+// }
+// //---------------------------------------------------------------------------------levelorder
+// void levelOrder(TreeNode *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return;
+//     }
+
+//     queue<TreeNode *> q;
+//     q.push(root);
+
+//     while (!q.empty())
+//     {
+//         TreeNode *current = q.front();
+//         q.pop();
+
+//         cout << current->val << " ";
+
+//         if (current->left != nullptr)
+//         {
+//             q.push(current->left);
+//         }
+//         if (current->right != nullptr)
+//         {
+//             q.push(current->right);
+//         }
+//     }
+// }
+// //----------------------------------------------------------------------------------------------countNodes
+// int countNodes(TreeNode *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return 0;
+//     }
+//     return 1 + countNodes(root->left) + countNodes(root->right);
+// }
+// //----------------------------------------------------------------------------------------------findmax
+// int findMax(TreeNode *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return INT_MIN;
+//     }
+
+//     int leftMax = findMax(root->left);
+//     int rightMax = findMax(root->right);
+
+//     return max(root->val,max(leftMax, rightMax));
+// }
+// //----------------------------------------------------------------------------------------------isSameTree
+// bool isSameTree(TreeNode *p, TreeNode *q)
+// {
+//     if (p == nullptr && q == nullptr)
+//     {
+//         return true;
+//     }
+
+//     if (p == nullptr || q == nullptr)
+//     {
+//         return false;
+//     }
+
+//     return (p->val == q->val) &&
+//            isSameTree(p->left, q->left) &&
+//            isSameTree(p->right, q->right);
+// }
+//---------------------------------------------------------------------------------------------int main
+// int main()
+// {
+//     TreeNode *root = new TreeNode(1);
+//     root->left = new TreeNode(2);
+//     root->right = new TreeNode(3);
+//     root->left->left = new TreeNode(7);
+//     root->left->right = new TreeNode(5);
+
+//     cout << "1. Height of tree: " << getHeight(root) << endl;
+
+//     cout << "2. Traversals:" << endl;
+//     cout << "   Pre-order: ";
+//     preOrder(root);
+//     cout << std::endl;
+//     cout << " In-order:  ";
+//     inOrder(root);
+//     cout << std::endl;
+//     cout << "   Post-order:";
+//     postOrder(root);
+//     cout << std::endl;
+//     cout << "   Level-order (BFS): ";
+//     levelOrder(root);
+//     cout << std::endl;
+
+//     cout << "3. Total nodes: " << countNodes(root) << endl;
+
+//     cout << "4. Maximum value: " << findMax(root) << endl;
+
+//     TreeNode *root2 = new TreeNode(1);
+//     root2->left = new TreeNode(2);
+//     root2->right = new TreeNode(3);
+//     root2->left->left = new TreeNode(7);
+//     root2->left->right = new TreeNode(5);
+
+//     TreeNode *root3 = new TreeNode(1);
+//     root3->left = new TreeNode(2);
+//     root3->right = new TreeNode(99);
+
+//     cout << "5. Identical checks:" << endl;
+//     cout << "   Tree 1 vs Tree 2 (identical): "
+//          << (isSameTree(root, root2) ? "True" : "False") << endl;
+//     cout << "   Tree 1 vs Tree 3 (different): "
+//          << (isSameTree(root, root3) ? "True" : "False") << endl;
+
+//     delete root->left->left;
+//     delete root->left->right;
+//     delete root->left;
+//     delete root->right;
+//     delete root;
+
+//     delete root2->left->left;
+//     delete root2->left->right;
+//     delete root2->left;
+//     delete root2->right;
+//     delete root2;
+
+//     delete root3->left;
+//     delete root3->right;
+//     delete root3;
+
+//     return 0;
+// }
+
+// -------------------------------prac--------------------------
+#include <iostream>
+#include <queue>
+#include <climits>
+using namespace std;
+
+class Node
 {
 public:
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    Node *left;
+    Node *right;
+    int value;
+    Node(int value)
+    {
+        this->value = value;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+int getheight(Node *root)
+{
+    if (root == nullptr)
+    {
+        return 0;
+    }
+    else
+    {
+        int leftheight = getheight(root->left);
+        int rightheight = getheight(root->right);
+        return 1 + max(leftheight, rightheight);
+    }
+}
+void preorder(Node *root)
+{
+    if (root == nullptr)
+    {
+        return;
+    }
+    else
+    {
+        cout << root->value << " ";
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+void inorder(Node *root)
+{
+    if (root == nullptr)
+    {
+        return;
+    }
+    else
+    {
+        inorder(root->left);
+        cout << root->value << " ";
+        inorder(root->right);
+    }
+}
+void postorder(Node *root)
+{
+    if (root == nullptr)
+    {
+        return;
+    }
+    else
+    {
+        postorder(root->left);
+        postorder(root->right);
+        cout << root->value << " ";
+    }
+}
 
-    int getHeight(TreeNode *root)
+void levelorder(Node *root)
+{
+    if (root == nullptr)
     {
-        if (root == nullptr)
-        {
-            return 0;
-        }
-        else
-        {
-            int leftHeight = getHeight(root->left);
-            int rightHeight = getHeight(root->right);
-            return 1 + std::max(leftHeight, rightHeight);
-        }
+        return;
     }
-//-----------------------------------------------------------------------------preorder
-    void preOrder(TreeNode *root)
+    else
     {
-        if (root == nullptr)
-        {
-            return;
-        }
-        std::cout << root->val << " ";
-        preOrder(root->left);
-        preOrder(root->right);
-    }
-//-------------------------------------------------------------------------------inorder
-    void inOrder(TreeNode *root)
-    {
-        if (root == nullptr)
-        {
-            return;
-        }
-        inOrder(root->left);
-        std::cout << root->val << " ";
-        inOrder(root->right);
-    }
-//----------------------------------------------------------------------------------postorder
-    void postOrder(TreeNode *root)
-    {
-        if (root == nullptr)
-        {
-            return;
-        }
-        postOrder(root->left);
-        postOrder(root->right);
-        std::cout << root->val << " ";
-    }
-//---------------------------------------------------------------------------------levelorder
-    void levelOrder(TreeNode *root)
-    {
-        if (root == nullptr)
-        {
-            return;
-        }
-
-        std::queue<TreeNode *> q;
+        queue<Node *> q;
         q.push(root);
 
         while (!q.empty())
         {
-            TreeNode *current = q.front();
+
+            Node *current = q.front();
             q.pop();
 
-            std::cout << current->val << " ";
+            cout << current->value << " ";
 
             if (current->left != nullptr)
             {
@@ -158,106 +368,56 @@ public:
             }
         }
     }
-//----------------------------------------------------------------------------------------------countNodes
-    int countNodes(TreeNode *root)
+}
+int countNodes(Node *root)
+{
+    if (root == nullptr)
     {
-        if (root == nullptr)
-        {
-            return 0;
-        }
+        return 0;
+    }
+    else
+    {
         return 1 + countNodes(root->left) + countNodes(root->right);
     }
-//----------------------------------------------------------------------------------------------findmax
-    int findMax(TreeNode *root)
-    {
-        if (root == nullptr)
-        {
-            return INT_MIN;
-        }
-
-        int leftMax = findMax(root->left);
-        int rightMax = findMax(root->right);
-
-        return std::max(root->val, std::max(leftMax, rightMax));
+}
+int findmax(Node* root){
+    if(root==nullptr){
+        return INT_MIN;
     }
-//----------------------------------------------------------------------------------------------isSameTree
-    bool isSameTree(TreeNode *p, TreeNode *q)
-    {
-        if (p == nullptr && q == nullptr)
-        {
-            return true;
-        }
-
-        if (p == nullptr || q == nullptr)
-        {
-            return false;
-        }
-
-        return (p->val == q->val) &&
-               isSameTree(p->left, q->left) &&
-               isSameTree(p->right, q->right);
+    else{
+        int leftmax=findmax(root->left);
+        int rightmax=findmax(root->right);
+        return max(root->value,max(leftmax,rightmax));
     }
-};
+}
 
 int main()
 {
-    TreeNode *root = new TreeNode(1);
-    root->left = new TreeNode(2);
-    root->right = new TreeNode(3);
-    root->left->left = new TreeNode(7);
-    root->left->right = new TreeNode(5);
+    Node *root = new Node(0);
+    root->left = new Node(1);
+    root->right = new Node(2);
+    root->left->left = new Node(3);
+    root->left->right = new Node(4);
+    root->left->right->left = new Node(5);
 
-    std::cout << "1. Height of tree: " << getHeight(root) << std::endl;
+    int size = getheight(root);
+    cout << size << endl;
 
-    std::cout << "2. Traversals:" << std::endl;
-    std::cout << "   Pre-order: ";
-    preOrder(root);
-    std::cout << std::endl;
-    std::cout << "   In-order:  ";
-    inOrder(root);
-    std::cout << std::endl;
-    std::cout << "   Post-order:";
-    postOrder(root);
-    std::cout << std::endl;
-    std::cout << "   Level-order (BFS): ";
-    levelOrder(root);
-    std::cout << std::endl;
+    preorder(root);
+    cout << endl;
+    inorder(root);
+    cout << endl;
+    postorder(root);
+    cout << endl;
 
-    std::cout << "3. Total nodes: " << countNodes(root) << std::endl;
+    cout << "level order traversal : " << endl;
+    levelorder(root);
 
-    std::cout << "4. Maximum value: " << findMax(root) << std::endl;
+    int number = countNodes(root);
+    cout << "Number of nodes: " << number << endl;
 
-    TreeNode *root2 = new TreeNode(1);
-    root2->left = new TreeNode(2);
-    root2->right = new TreeNode(3);
-    root2->left->left = new TreeNode(7);
-    root2->left->right = new TreeNode(5);
-
-    TreeNode *root3 = new TreeNode(1);
-    root3->left = new TreeNode(2);
-    root3->right = new TreeNode(99);
-
-    std::cout << "5. Identical checks:" << std::endl;
-    std::cout << "   Tree 1 vs Tree 2 (identical): "
-              << (isSameTree(root, root2) ? "True" : "False") << std::endl;
-    std::cout << "   Tree 1 vs Tree 3 (different): "
-              << (isSameTree(root, root3) ? "True" : "False") << std::endl;
-
-    delete root->left->left;
-    delete root->left->right;
-    delete root->left;
-    delete root->right;
-    delete root;
-
-    delete root2->left->left;
-    delete root2->left->right;
-    delete root2->left;
-    delete root2->right;
-    delete root2;
-
-    delete root3->left;
-    delete root3->right;
-    delete root3;
+    int maximum=findmax(root);
+    cout<<maximum<<endl;
 
     return 0;
 }
