@@ -268,156 +268,247 @@
 // }
 
 // -------------------------------prac--------------------------
+// #include <iostream>
+// #include <queue>
+// #include <climits>
+// using namespace std;
+
+// class Node
+// {
+// public:
+//     Node *left;
+//     Node *right;
+//     int value;
+//     Node(int value)
+//     {
+//         this->value = value;
+//         left = nullptr;
+//         right = nullptr;
+//     }
+// };
+// int getheight(Node *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return 0;
+//     }
+//     else
+//     {
+//         int leftheight = getheight(root->left);
+//         int rightheight = getheight(root->right);
+//         return 1 + max(leftheight, rightheight);
+//     }
+// }
+// void preorder(Node *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return;
+//     }
+//     else
+//     {
+//         cout << root->value << " ";
+//         preorder(root->left);
+//         preorder(root->right);
+//     }
+// }
+// void inorder(Node *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return;
+//     }
+//     else
+//     {
+//         inorder(root->left);
+//         cout << root->value << " ";
+//         inorder(root->right);
+//     }
+// }
+// void postorder(Node *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return;
+//     }
+//     else
+//     {
+//         postorder(root->left);
+//         postorder(root->right);
+//         cout << root->value << " ";
+//     }
+// }
+
+// void levelorder(Node *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return;
+//     }
+//     else
+//     {
+//         queue<Node *> q;
+//         q.push(root);
+
+//         while (!q.empty())
+//         {
+
+//             Node *current = q.front();
+//             q.pop();
+
+//             cout << current->value << " ";
+
+//             if (current->left != nullptr)
+//             {
+//                 q.push(current->left);
+//             }
+//             if (current->right != nullptr)
+//             {
+//                 q.push(current->right);
+//             }
+//         }
+//     }
+// }
+// int countNodes(Node *root)
+// {
+//     if (root == nullptr)
+//     {
+//         return 0;
+//     }
+//     else
+//     {
+//         return 1 + countNodes(root->left) + countNodes(root->right);
+//     }
+// }
+// int findmax(Node* root){
+//     if(root==nullptr){
+//         return INT_MIN;
+//     }
+//     else{
+//         int leftmax=findmax(root->left);
+//         int rightmax=findmax(root->right);
+//         return max(root->value,max(leftmax,rightmax));
+//     }
+// }
+
+// int main()
+// {
+//     Node *root = new Node(0);
+//     root->left = new Node(1);
+//     root->right = new Node(2);
+//     root->left->left = new Node(3);
+//     root->left->right = new Node(4);
+//     root->left->right->left = new Node(5);
+
+//     int size = getheight(root);
+//     cout << size << endl;
+
+//     preorder(root);
+//     cout << endl;
+//     inorder(root);
+//     cout << endl;
+//     postorder(root);
+//     cout << endl;
+
+//     cout << "level order traversal : " << endl;
+//     levelorder(root);
+
+//     int number = countNodes(root);
+//     cout << "Number of nodes: " << number << endl;
+
+//     int maximum=findmax(root);
+//     cout<<maximum<<endl;
+
+//     return 0;
+// }
+
+
+// -------------------------------------------------11 -11 - 2025--------------------------------
+
 #include <iostream>
-#include <queue>
-#include <climits>
 using namespace std;
 
-class Node
-{
-public:
-    Node *left;
-    Node *right;
+class Node{
+    public:
+    Node* left;
+    Node* right;
     int value;
-    Node(int value)
-    {
-        this->value = value;
-        left = nullptr;
-        right = nullptr;
+    Node(int value){
+        this->value=value;
+        left=right=NULL;
     }
-};
-int getheight(Node *root)
-{
-    if (root == nullptr)
-    {
-        return 0;
-    }
-    else
-    {
-        int leftheight = getheight(root->left);
-        int rightheight = getheight(root->right);
-        return 1 + max(leftheight, rightheight);
-    }
-}
-void preorder(Node *root)
-{
-    if (root == nullptr)
-    {
-        return;
-    }
-    else
-    {
-        cout << root->value << " ";
-        preorder(root->left);
-        preorder(root->right);
-    }
-}
-void inorder(Node *root)
-{
-    if (root == nullptr)
-    {
-        return;
-    }
-    else
-    {
-        inorder(root->left);
-        cout << root->value << " ";
-        inorder(root->right);
-    }
-}
-void postorder(Node *root)
-{
-    if (root == nullptr)
-    {
-        return;
-    }
-    else
-    {
-        postorder(root->left);
-        postorder(root->right);
-        cout << root->value << " ";
-    }
-}
 
-void levelorder(Node *root)
-{
-    if (root == nullptr)
-    {
-        return;
-    }
-    else
-    {
-        queue<Node *> q;
-        q.push(root);
-
-        while (!q.empty())
-        {
-
-            Node *current = q.front();
-            q.pop();
-
-            cout << current->value << " ";
-
-            if (current->left != nullptr)
-            {
-                q.push(current->left);
-            }
-            if (current->right != nullptr)
-            {
-                q.push(current->right);
+    void nodesatlevel(Node* root,int distance){
+        if(root==NULL) return;
+        else{
+            if(distance==0){
+                cout<<root->value<<" ";
+                return;
             }
         }
+        nodesatlevel(root->left,distance-1);
+        nodesatlevel(root->right,distance-1);
     }
-}
-int countNodes(Node *root)
-{
-    if (root == nullptr)
-    {
-        return 0;
+
+    int findtheheightoftree(Node* root){
+        if(root==NULL){
+            return -1;
+        }
+        else{
+            return 1+ max(findtheheightoftree(root->left),findtheheightoftree(root->right));
+        }
     }
-    else
-    {
-        return 1 + countNodes(root->left) + countNodes(root->right);
+    void printtreesorted(Node* root){  // it is not a binary search tree so inorder will not print a sorted tree 
+        if(root==NULL){
+            return;
+        }
+        else{
+            printtreesorted(root->left);
+            cout<<root->value<<" ";
+            printtreesorted(root->right);
+        }
     }
-}
-int findmax(Node* root){
-    if(root==nullptr){
-        return INT_MIN;
+    void levelorderusingheight(Node* root){  // time complexity is n^2 as nodesatlevel loop is in the forloop of this function
+        int h=findtheheightoftree(root);
+        for(int i=0;i<=h;i++){
+            nodesatlevel(root,i);
+        }
+        cout<<endl;
     }
-    else{
-        int leftmax=findmax(root->left);
-        int rightmax=findmax(root->right);
-        return max(root->value,max(leftmax,rightmax));
+    int totalnodes(Node* root){
+        if(root==NULL){
+            return 0;
+        }
+        return 1+ totalnodes(root->left)+totalnodes(root->right);
     }
-}
 
-int main()
-{
-    Node *root = new Node(0);
-    root->left = new Node(1);
-    root->right = new Node(2);
-    root->left->left = new Node(3);
-    root->left->right = new Node(4);
-    root->left->right->left = new Node(5);
+};
 
-    int size = getheight(root);
-    cout << size << endl;
+int main(){
+    Node* root=new Node(0);
+    root->left=new Node(1);
+    root->right=new Node(2);
+    root->left->left=new Node(3);
+    root->left->right=new Node(4);
+    root->left->left->left=new Node(5);
 
-    preorder(root);
-    cout << endl;
-    inorder(root);
-    cout << endl;
-    postorder(root);
-    cout << endl;
+    cout<<"nodes at level 1 are:"<<endl;
+    root->nodesatlevel(root,1);
+    cout<<endl;
 
-    cout << "level order traversal : " << endl;
-    levelorder(root);
+    int height=root->findtheheightoftree(root);
+    cout<<"height of tree is: "<<height<<endl;
 
-    int number = countNodes(root);
-    cout << "Number of nodes: " << number << endl;
+    cout<<"inorder traversal of tree:"<<endl;
+    root->printtreesorted(root);
+    cout<<endl;
 
-    int maximum=findmax(root);
-    cout<<maximum<<endl;
+    cout<<"levelordertraversal"<<endl;
+    root->levelorderusingheight(root);
+
+    cout<<"total nodes: "<<root->totalnodes(root)<<endl;
+
 
     return 0;
+    
 }
